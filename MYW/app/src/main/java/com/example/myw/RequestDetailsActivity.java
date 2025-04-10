@@ -1,20 +1,23 @@
-package com.example.saathi;
+package com.example.myw;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 public class RequestDetailsActivity extends AppCompatActivity {
 
-    TextView titleText, categoryText, statusText, descriptionText;
-    ImageView screenshotImage;
+    TextView titleText, categoryText, statusText, descriptionText,
+            idText, severityText, authorText, upvotesText, downvotesText;
+    LinearLayout imageContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,34 +25,46 @@ public class RequestDetailsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_request_details);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
         // Initialize views
         titleText = findViewById(R.id.titleText);
         categoryText = findViewById(R.id.categoryText);
         statusText = findViewById(R.id.statusText);
         descriptionText = findViewById(R.id.descriptionText);
-        screenshotImage = findViewById(R.id.screenshotImage);
+        idText = findViewById(R.id.idText);
+        severityText = findViewById(R.id.severityText);
+        authorText = findViewById(R.id.authorText);
+        upvotesText = findViewById(R.id.upvotesText);
+        downvotesText = findViewById(R.id.downvotesText);
+        imageContainer = findViewById(R.id.imageContainer);
 
         // Receive data from Intent
         Intent intent = getIntent();
         if (intent != null) {
-            String title = intent.getStringExtra("title");
-            String category = intent.getStringExtra("category");
-            String status = intent.getStringExtra("status");
-            String description = intent.getStringExtra("description");
+            titleText.setText(intent.getStringExtra("title"));
+            categoryText.setText(intent.getStringExtra("category"));
+            statusText.setText(intent.getStringExtra("status"));
+            descriptionText.setText(intent.getStringExtra("description"));
+            idText.setText("ID: " + intent.getStringExtra("id"));
+            severityText.setText("Severity: " + intent.getStringExtra("severity"));
+            authorText.setText("Author: " + intent.getStringExtra("author"));
+            upvotesText.setText("Upvotes: " + intent.getIntExtra("upvotes", 0));
+            downvotesText.setText("Downvotes: " + intent.getIntExtra("downvotes", 0));
 
-            // Set values to views
-            titleText.setText(title);
-            categoryText.setText(category);
-            statusText.setText(status);
-            descriptionText.setText(description);
+            // Load image URLs into horizontal scroll
+            ArrayList<String> imageUrls = intent.getStringArrayListExtra("images");
+            if (imageUrls != null) {
+                for (String url : imageUrls) {
+                    ImageView imageView = new ImageView(this);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            400, 400);
+                    layoutParams.setMargins(8, 0, 8, 0);
+                    imageView.setLayoutParams(layoutParams);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                    Glide.with(this).load(url).into(imageView);
+                    imageContainer.addView(imageView);
+                }
+            }
         }
-
-        // Optional: Add image loading later if screenshot URL is passed
     }
 }

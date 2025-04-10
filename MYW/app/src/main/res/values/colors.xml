@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Basic colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#0022FF</color>
 
+    <!-- Material Theme Colors -->
+    <color name="colorPrimary">#346EF1</color>
+    <color name="colorPrimaryVariant">#274BA1</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
 
+    <color name="colorSecondary">#FF4081</color>
+    <color name="colorSecondaryVariant">#C60055</color> <!-- Optional but good to define -->
+    <color name="colorOnSecondary">#FFFFFF</color>
+
+    <color name="colorBackground">#F5F7FA</color>
+    <color name="colorOnBackground">#2C3E50</color>
+
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#2C3E50</color>
+
+    <!-- Optional error colors -->
+    <color name="colorError">#B00020</color>
+    <color name="colorOnError">#FFFFFF</color>
+
+    <!-- Greys -->
     <color name="grey_60">#666666</color>
     <color name="grey_80">#37474F</color>
     <color name="grey_90">#263238</color>
-
 </resources>
